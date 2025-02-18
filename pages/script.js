@@ -89,11 +89,7 @@ async function loadSkills() {
           "progress": 60,
           "icon": "🎨"
         },
-        {
-          "name": "Node.js",
-          "progress": 75,
-          "icon": "⚡"
-        },
+        ,
         {
           "name": "SQL",
           "progress": 20,
