@@ -27,34 +27,8 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
-// Mobile menu
-const menuBtn = document.querySelector('.menu-btn');
-const navLinks = document.querySelector('.nav-links');
 
-menuBtn.addEventListener('click', () => {
-  navLinks.classList.toggle('active');
-  menuBtn.classList.toggle('active');
-});
 
-// Form handling
-const contactForm = document.getElementById('contact-form');
-
-contactForm.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  
-  const formData = {
-    name: document.getElementById('name').value,
-    email: document.getElementById('email').value,
-    message: document.getElementById('message').value
-  };
-  
-  // Add your form submission logic here
-  // For example, sending to an API endpoint
-  
-  // Show success message
-  alert('Message sent successfully!');
-  contactForm.reset();
-});
 
 // Intersection Observer for animations
 const observerOptions = {
@@ -212,3 +186,43 @@ function observeSkills() {
 
 // Initialize skills when DOM is loaded
 document.addEventListener('DOMContentLoaded', loadSkills);
+
+
+// Form handling with EmailJS
+const contactForm = document.getElementById('contact-form');
+
+contactForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const formData = {
+    name: document.getElementById('name').value,
+    email: document.getElementById('email').value,
+    message: document.getElementById('message').value
+  };
+
+  // Initialize EmailJS
+  emailjs.init("BUqlLt2pdt3uYTqAG"); // Replace YOUR_USER_ID with your EmailJS User ID.
+
+  const serviceID = "service_5j8vkfh"; // Replace YOUR_SERVICE_ID with your EmailJS service ID.
+  const templateID = "template_knt69i7"; // Replace YOUR_TEMPLATE_ID with your EmailJS template ID.
+
+  try {
+    await emailjs.send(serviceID, templateID, formData);
+    alert("Message sent successfully!");
+    contactForm.reset();
+  } catch (error) {
+    console.error("Failed to send message:", error);
+    alert("Failed to send the message. Please try again later.");
+  }
+});
+
+
+
+const menuBtn = document.querySelector('.menu-btn');
+const navLinks = document.querySelector('.nav-links');
+
+// Toggle menu
+menuBtn.addEventListener('click', () => {
+  navLinks.classList.toggle('active'); // Show/hide nav
+  document.body.classList.toggle('menu-open'); // Prevent scrolling when menu is open
+});
